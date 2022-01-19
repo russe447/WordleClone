@@ -1,5 +1,4 @@
 import random
-from sre_constants import CATEGORY_NOT_LINEBREAK
 import time
 from termcolor import colored
 
@@ -20,12 +19,13 @@ def main():
     
     
 def play(word): 
+    time.sleep(0.2)
     guesses_left = 5
     length = len(word)
     color_arr = ['' for i in range(length)]
     w = ""
     for i in range(length):
-        w = w + "_ "
+        w = w + "_"
     print(word)
     solved = False
     letters = ["A","B","C","D",'E',"F","G","H","I","J","K","L",
@@ -35,7 +35,10 @@ def play(word):
         print(color.BOLD + str(guesses_left) + ' guesses left' + color.END + '\n')
         print(color.UNDERLINE + 'Your Letters' + color.END)
         print(*letters)
-        print("Guess: " + str(w))
+        print("Guess:", end =" ")
+        for i in range(length):
+            print(color_arr[i] + w[i].upper() + color.END, end=" ")
+        print() 
         valid_input = False
         inp =''
         while not valid_input:
@@ -47,23 +50,33 @@ def play(word):
         # Check if the guess matches the letter or if it exists in the word
         w = inp
         w = w.upper()
-        
-        for i in range(length):
-            if w[i].upper() in word.upper():
-                print("im in word")
-                if w[i].upper() == word[i].upper():
-                    color_arr[i] = color.CYAN
-                else: 
-                    color_arr[i] = color.RED
-            # if letter not in word remove from letters
-            else:
-                if w[i].upper() in letters:
-                    letters.remove(w[i].upper())
+        time.sleep(0.2)
+        if w == word.upper():
+            print(color.BOLD + 'Congratulations! Your guess of ' + color.GREEN + 
+                  str(w) + color.END + ' was correct!')
+            print()
+            solved = True
+        else:
+            for i in range(length):
+                if w[i].upper() in word.upper():
+                    if w[i].upper() == word[i].upper():
+                        color_arr[i] = color.GREEN
+                    else: 
+                        color_arr[i] = color.YELLOW
+                # if letter not in word remove from letters
+                else:
+                    if w[i].upper() in letters:
+                        letters.remove(w[i].upper())
 
         
         guesses_left = guesses_left - 1
-    if solved:
-        print(color.BOLD + "Congratulations!" + color.END)
+    if not solved:
+        print('The word was: ' + color.PURPLE + word.upper() + color.END)
+        time.sleep(0.8)
+        print(color.BOLD + 'Better Luck Next Time!' + color.END)
+        time.sleep(0.1)
+        print()
+        time.sleep(0.2)
         
 
 def setup():
@@ -94,13 +107,18 @@ def setup():
     
     
     while game_active:
+        time.sleep(0.3)
         print(color.BOLD + 'Welcome to Wordle!' + color.END)
+        time.sleep(0.3)
+        print()
         print(color.UNDERLINE + color.BOLD + 'What would you like to do?' + color.END)
         #print('--------------------------')
         inp = input('|' + color.CYAN + 'PLAY' + color.END + '|' + color.PURPLE + 'EXIT' + color.END + '|\n')
         
         if inp == 'exit' or inp == 'EXIT':
+            time.sleep(0.1)
             print(color.BLUE + 'Thank you for playing!' + color.END)
+            time.sleep(0.3)
             game_active = False
         else:
             time.sleep(0.2)
