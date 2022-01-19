@@ -23,8 +23,6 @@ def play(word):
     guesses_left = 5
     length = len(word)
     print(word)
-    ### This causes an error marking incorrect letters as correct since 
-    ### it bases the color on position of the guess
     color_arr = ['' for i in range(length)]
     w = ""
     for i in range(length):
