@@ -22,23 +22,26 @@ def play(word):
     time.sleep(0.2)
     guesses_left = 5
     length = len(word)
+    print(word)
+    ### This causes an error marking incorrect letters as correct since 
+    ### it bases the color on position of the guess
     color_arr = ['' for i in range(length)]
     w = ""
     for i in range(length):
         w = w + "_"
-    print(word)
     solved = False
     letters = ["A","B","C","D",'E',"F","G","H","I","J","K","L",
                "M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     
     while guesses_left and not solved:
-        print(color.BOLD + str(guesses_left) + ' guesses left' + color.END + '\n')
+        print(color.BOLD + str(guesses_left) + ' guesses left' + color.END)
         print(color.UNDERLINE + 'Your Letters' + color.END)
         print(*letters)
         print("Guess:", end =" ")
         for i in range(length):
             print(color_arr[i] + w[i].upper() + color.END, end=" ")
         print() 
+        color_arr = ['' for i in range(length)]
         valid_input = False
         inp =''
         while not valid_input:
@@ -50,11 +53,12 @@ def play(word):
         # Check if the guess matches the letter or if it exists in the word
         w = inp
         w = w.upper()
-        time.sleep(0.2)
+        time.sleep(0.1)
         if w == word.upper():
             print(color.BOLD + 'Congratulations! Your guess of ' + color.GREEN + 
                   str(w) + color.END + ' was correct!')
             print()
+            time.sleep(0.8)
             solved = True
         else:
             for i in range(length):
@@ -72,11 +76,10 @@ def play(word):
         guesses_left = guesses_left - 1
     if not solved:
         print('The word was: ' + color.PURPLE + word.upper() + color.END)
-        time.sleep(0.8)
+        time.sleep(0.5)
         print(color.BOLD + 'Better Luck Next Time!' + color.END)
-        time.sleep(0.1)
         print()
-        time.sleep(0.2)
+        time.sleep(0.7)
         
 
 def setup():
